@@ -73,6 +73,18 @@ void AShooterSamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	}
 }
 
+void AShooterSamCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+
+	if (Gun)
+	{
+		Gun->SetOwner(this);
+	}
+}
+
 void AShooterSamCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
@@ -93,7 +105,8 @@ void AShooterSamCharacter::Look(const FInputActionValue& Value)
 
 void AShooterSamCharacter::Shoot(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Pew!"));
+	if (Gun) Gun->PullTrigger();
+	
 }
 
 void AShooterSamCharacter::DoMove(float Right, float Forward)
