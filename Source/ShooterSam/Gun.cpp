@@ -21,7 +21,6 @@ AGun::AGun()
 void AGun::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -33,6 +32,13 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::PullTrigger()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PullTrigger!!"));
+	if (OwnerController)
+	{
+		FVector ViewPointLocation;
+		FRotator ViewPointRotation;
+		OwnerController->GetPlayerViewPoint(ViewPointLocation, ViewPointRotation);
+		
+		DrawDebugCamera(GetWorld(), ViewPointLocation, ViewPointRotation, 90.0f, 2.0f, FColor::Red, true);
+	}
 }
 
