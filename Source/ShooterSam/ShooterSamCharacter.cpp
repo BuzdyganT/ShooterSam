@@ -77,8 +77,9 @@ void AShooterSamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	GetMesh()->HideBoneByName("weapon_r",EPhysBodyOp::PBO_None);
+	OnTakeAnyDamage.AddDynamic(this, &AShooterSamCharacter::OnDamageTaken);
 	
+	GetMesh()->HideBoneByName("weapon_r",EPhysBodyOp::PBO_None);
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 
 	if (Gun)
@@ -111,6 +112,12 @@ void AShooterSamCharacter::Shoot(const FInputActionValue& Value)
 {
 	if (Gun) Gun->PullTrigger();
 	
+}
+
+void AShooterSamCharacter::OnDamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
+	class AController* InstigatedBy, AActor* DamageCauser)
+{
+	UE_LOG(LogTemp, Display, TEXT("Took damage: %f"), Damage);
 }
 
 void AShooterSamCharacter::DoMove(float Right, float Forward)
