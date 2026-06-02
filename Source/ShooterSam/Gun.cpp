@@ -39,6 +39,7 @@ void AGun::Tick(float DeltaTime)
 void AGun::PullTrigger()
 {
 	MuzzleFlashParticleSystem->Activate(true);
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ShootSound, GetActorLocation());
 	
 	if (OwnerController)
 	{
@@ -56,6 +57,8 @@ void AGun::PullTrigger()
 		if (IsHit)
 		{
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactParticleSystem, HitResult.ImpactPoint, HitResult.ImpactNormal.Rotation());
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, HitResult.ImpactPoint);
+
 			AActor* HitActor = HitResult.GetActor();
 			if (HitActor)
 			{
