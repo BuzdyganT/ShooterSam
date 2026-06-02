@@ -99,7 +99,7 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	void Shoot(const FInputActionValue& Value);
+	void Shoot();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AGun> GunClass;
